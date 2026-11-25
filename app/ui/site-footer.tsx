@@ -2,7 +2,7 @@ import { css } from 'remix/component'
 
 import { profile, socials } from '../data/site.ts'
 import { ArrowUp, ArrowUpRight, GitHubMark, InstagramMark, LinkedInMark, Mail } from './public/icons.tsx'
-import { CopyEmail, LocalTime } from './public/small-widgets.tsx'
+import { CopyEmail } from './public/small-widgets.tsx'
 
 function SocialIcon(label: string) {
   switch (label) {
@@ -64,9 +64,9 @@ export function SiteFooter() {
               '@media (max-width: 820px)': { '& .l2': { paddingLeft: 0 } },
             })}
           >
-            Have an idea?
+            Got a questionable idea?
             <span class="l2">
-              Let’s make it <span class="serif">real.</span>
+              Perfect. Let’s make it <span class="serif">real.</span>
             </span>
           </h2>
 
@@ -133,7 +133,7 @@ export function SiteFooter() {
               '@media (max-width: 820px)': { '& > *': { gridColumn: '1 / -1 !important' } },
             })}
           >
-            <nav aria-label="Social" mix={css({ gridColumn: '1 / span 5' })}>
+            <nav aria-label="Social" mix={css({ gridColumn: '1 / span 6' })}>
               <p class="eyebrow h">Elsewhere</p>
               <ul
                 mix={css({
@@ -185,31 +185,18 @@ export function SiteFooter() {
               </ul>
             </nav>
 
-            <div mix={css({ gridColumn: '7 / span 3', fontSize: '15px', '& p + p': { marginTop: '6px' } })}>
-              <p class="eyebrow h">Local time</p>
-              <p>
-                <LocalTime timeZone={profile.timeZone} label="IST, India" />
-              </p>
-              <p mix={css({ color: 'var(--fg-subtle)' })}>{profile.collegeShort}</p>
-            </div>
-
             <div
               mix={css({
-                gridColumn: '10 / span 3',
+                gridColumn: '9 / span 4',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-start',
+                justifyContent: 'flex-end',
                 gap: '18px',
               })}
             >
-              <p class="eyebrow h" mix={css({ marginBottom: 0 })}>
-                Sign-off
-              </p>
-              <p mix={css({ fontSize: '15px', color: 'var(--fg-muted)', maxWidth: '30ch' })}>
-                Designed and built in India, one commit at a time. Thanks for scrolling this far.
-              </p>
               <a href="#top" class="btn btn-ghost" data-magnetic mix={css({ '--btn-h': '44px', fontSize: '14px' })}>
-                Back to top
+                Teleport to top
                 <span class="btn-icon up" aria-hidden="true">
                   <ArrowUp stroke={2} />
                   <ArrowUp stroke={2} />
@@ -258,7 +245,6 @@ export function SiteFooter() {
           <p class="eyebrow">
             © {year} {profile.name}
           </p>
-          <p class="eyebrow">{profile.role}</p>
         </div>
       </footer>
     )

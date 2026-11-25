@@ -1,9 +1,9 @@
 import { css, type Handle } from 'remix/component'
 
-import { formatPostDate, posts } from '../data/posts.ts'
+import { formatPostDate, posts, type Block } from '../data/posts.ts'
 import { profile, socials } from '../data/site.ts'
 import { PostCover } from '../ui/public/covers.tsx'
-import { ArrowLeft, ArrowRight } from '../ui/public/icons.tsx'
+import { ArrowLeft, ArrowRight, ArrowUpRight } from '../ui/public/icons.tsx'
 import { SiteNav } from '../ui/public/site-nav.tsx'
 import { SiteFooter } from '../ui/site-footer.tsx'
 import { Document } from './document.tsx'
@@ -29,8 +29,6 @@ const prose = css({
     margin: '2em 0',
     paddingLeft: '24px',
     borderLeft: '2px solid var(--accent)',
-    fontFamily: 'var(--font-serif)',
-    fontStyle: 'italic',
     fontSize: '1.6em',
     lineHeight: 1.3,
     color: 'var(--fg)',
@@ -50,6 +48,31 @@ const prose = css({
   },
 })
 
+function renderBlock(block: Block, key: number) {
+  switch (block.type) {
+    case 'h2':
+      return <h2 key={key}>{block.text}</h2>
+    case 'quote':
+      return <blockquote key={key}>{block.text}</blockquote>
+    case 'code':
+      return (
+        <pre key={key}>
+          <code>{block.text}</code>
+        </pre>
+      )
+    case 'ul':
+      return (
+        <ul key={key}>
+          {block.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      )
+    default:
+      return <p key={key}>{block.text}</p>
+  }
+}
+
 export function BlogPostPage(handle: Handle<{ index: number }>) {
   return () => {
     let post = posts[handle.props.index]
@@ -61,6 +84,7 @@ export function BlogPostPage(handle: Handle<{ index: number }>) {
         <SiteNav onHome={false} current="blog" socials={socials} />
         <main id="main">
           <article
+            id="top"
             class="container"
             mix={css({ paddingTop: 'calc(var(--nav-h) + clamp(56px, 9vw, 120px))' })}
           >
@@ -95,8 +119,8 @@ export function BlogPostPage(handle: Handle<{ index: number }>) {
                 })}
               >
                 <span class="cat">{post.category}</span>
-                <time datetime={post.date}>{formatPostDate(post.date)}</time>
-                <span>{post.readingMinutes} min read</span>
+                {post.date ? <time datetime={post.date}>{formatPostDate(post.date)}</time> : null}
+                {post.readingMinutes ? <span>{post.readingMinutes} min read</span> : null}
               </p>
 
               <h1
@@ -156,39 +180,33 @@ export function BlogPostPage(handle: Handle<{ index: number }>) {
             </figure>
 
             <div mix={[prose, css({ marginTop: 'clamp(56px, 7vw, 96px)' })]}>
-              <p
-                mix={css({
-                  padding: '16px 18px',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px dashed var(--line-strong)',
-                  fontSize: '15px',
-                  lineHeight: 1.55,
-                })}
-              >
-                <strong>Placeholder article.</strong> This page shows how an entry will be laid out.
-                Replace the title and metadata in <code>app/data/posts.ts</code> and write the body
-                here.
-              </p>
-              <h2>[Section heading]</h2>
-              <p>
-                [Opening paragraph: the problem, why it mattered and what you set out to do. Keep it
-                concrete and short.]
-              </p>
-              <ul>
-                <li>[A constraint you were working under]</li>
-                <li>[A decision you made, and the trade-off]</li>
-                <li>[What you would do differently]</li>
-              </ul>
-              <blockquote>[A pull quote: the one line you want readers to remember.]</blockquote>
-              <h2>[Implementation notes]</h2>
-              <p>[Walk through the interesting part. Code blocks render like this:]</p>
-              <pre>
-                <code>{`// [Replace with a real snippet]\nexport function example() {\n  return 'hello'\n}`}</code>
-              </pre>
-              <p>[Closing thought, plus links to the project or repository.]</p>
+              {post.body?.length ? (
+                post.body.map((block, i) => renderBlock(block, i))
+              ) : (
+                <p class="ph" mix={css({ fontSize: '15px' })}>
+                  [Article text goes here. Add blocks to <code>body</code> in app/data/posts.ts]
+                </p>
+              )}
+              {post.source ? (
+                <p>
+                  <a
+                    href={post.source.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="btn btn-ghost"
+                    mix={css({ color: 'var(--fg)' })}
+                  >
+                    Read on {post.source.label}
+                    <span class="btn-icon" aria-hidden="true">
+                      <ArrowUpRight stroke={2} />
+                      <ArrowUpRight stroke={2} />
+                    </span>
+                  </a>
+                </p>
+              ) : null}
             </div>
 
-            <nav
+            {newer || older ? <nav
               aria-label="More entries"
               mix={css({
                 display: 'grid',
@@ -236,7 +254,7 @@ export function BlogPostPage(handle: Handle<{ index: number }>) {
                   <span class="t">{older.title}</span>
                 </a>
               ) : null}
-            </nav>
+            </nav> : null}
           </article>
         </main>
         <SiteFooter />
@@ -263,11 +281,11 @@ export function NotFoundPage() {
       >
         <p class="eyebrow">Error 404</p>
         <h1 mix={css({ fontSize: 'clamp(3rem, 10vw, 9rem)', lineHeight: 0.9, letterSpacing: '-0.055em' })}>
-          Nothing <span class="serif accent-ink">here</span> yet.
+          Nothing <span class="serif accent-ink">here</span>. I checked twice.
         </h1>
         <p>
           <a href="/" class="btn btn-primary">
-            Back home
+            Take me home
             <span class="btn-icon" aria-hidden="true">
               <ArrowRight stroke={2} />
               <ArrowRight stroke={2} />

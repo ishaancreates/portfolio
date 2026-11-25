@@ -28,7 +28,7 @@ const jsonLd = JSON.stringify({
   jobTitle: 'Developer',
   email: `mailto:${profile.email}`,
   alumniOf: { '@type': 'CollegeOrUniversity', name: profile.college },
-  address: { '@type': 'PostalAddress', addressLocality: 'Sultanpur', addressCountry: 'IN' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Gorakhpur', addressCountry: 'IN' },
   sameAs: socials.filter((s) => s.href?.startsWith('http')).map((s) => s.href),
 })
 
@@ -63,12 +63,13 @@ export function Document(handle: Handle<DocumentProps>) {
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:title" content={title} />
           <meta name="twitter:description" content={description} />
-          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&display=swap"
           />
           <link rel="stylesheet" href={stylesheetHref} />
           <script type="application/ld+json" innerHTML={unsafeHTML(jsonLd)} />

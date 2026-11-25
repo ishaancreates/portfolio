@@ -13,8 +13,9 @@
   color-scheme: dark;
 
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  /* One family only: Geist. Mono/serif tokens alias it so nothing falls back. */
+  --font-mono: var(--font-sans);
+  --font-serif: var(--font-sans);
 
   /* Surfaces: near-black with a faint olive cast, never flat #000 */
   --bg: oklch(0.158 0.006 125);
@@ -279,11 +280,11 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Accent-colored emphasis word; same sans, no italics */
   .serif {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-style: normal;
+    font-weight: inherit;
+    color: var(--accent-ink);
   }
 
   .accent-ink {
@@ -419,6 +420,47 @@
   @media (hover: hover) {
     .link-draw:hover {
       background-size: 100% 1px;
+    }
+  }
+
+  /* Collapsible sections: the heading is the (invisible) toggle */
+  .c-toggle {
+    display: inline;
+    padding: 0;
+    text-align: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+
+  [data-collapsible] > .c-body {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 700ms var(--ease-emph);
+  }
+
+  [data-collapsible] > .c-body > .c-inner {
+    min-height: 0;
+    overflow: clip;
+    overflow-clip-margin: 24px;
+  }
+
+  [data-collapsible][data-collapsed] > .c-body {
+    grid-template-rows: 0fr;
+  }
+
+  [data-collapsible][data-collapsed] > .c-body > .c-inner {
+    overflow: hidden;
+    visibility: hidden;
+    transition: visibility 0s linear 700ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-collapsible] > .c-body,
+    [data-collapsible][data-collapsed] > .c-body > .c-inner {
+      transition: none;
     }
   }
 

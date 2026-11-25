@@ -1,5 +1,7 @@
 import { css, type Handle, type RemixNode } from 'remix/component'
 
+import { CollapseToggle } from './collapsible.tsx'
+
 interface SectionHeadingProps {
   index: string
   label: string
@@ -55,7 +57,7 @@ export function SectionHeading(handle: Handle<SectionHeadingProps>) {
           <span>{label}</span>
         </p>
         <h2 id={id} data-reveal style={{ '--i': '1' }}>
-          {title}
+          <CollapseToggle>{title}</CollapseToggle>
         </h2>
         {aside ? (
           <div class="aside" data-reveal style={{ '--i': '2' }}>

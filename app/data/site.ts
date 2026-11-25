@@ -23,8 +23,8 @@ export const profile = {
   degree: 'B.Tech, Electrical Engineering',
   degreeYears: '2024–28',
   cgpa: '8 / 10',
-  location: 'Sultanpur, India',
-  coordinates: '26.26° N, 82.07° E',
+  location: 'Gorakhpur, India',
+  coordinates: '26.7598° N, 83.3818° E',
   timeZone: 'Asia/Kolkata',
   email: 'ishaanmaybe@gmail.com',
   status: {
@@ -36,43 +36,37 @@ export const profile = {
 }
 
 export const socials: SocialLink[] = [
-  { label: 'GitHub', href: 'https://github.com/ishaancreates', handle: '@ishaancreates' },
   {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/ishaan-pandey-3b0517216/',
-    handle: 'Ishaan Pandey',
+    label: "GitHub",
+    href: "https://github.com/ishaancreates",
+    handle: "@ishaancreates",
   },
-  // placeholder: Instagram URL was not provided.
-  { label: 'Instagram', href: null, handle: '[Add handle]' },
-  { label: 'Email', href: 'mailto:ishaanmaybe@gmail.com', handle: 'ishaanmaybe@gmail.com' },
-]
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/ishaan-pandey-3b0517216/",
+    handle: "Ishaan Pandey",
+  },
+
+  {
+    label: "Instagram",
+    href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1&pp=ygUJcmljayByb2xsoAcB",
+    handle: "pareshan.ishaan",
+  },
+  {
+    label: "Email",
+    href: "mailto:ishaanmaybe@gmail.com",
+    handle: "ishaanmaybe@gmail.com",
+  },
+];
 
 export const about = {
-  lead: 'I study electrical engineering at KNIT Sultanpur and spend most of my time building software. That means hackathon prototypes, production apps and the tools my campus actually uses.',
-  paragraphs: [
-    {
-      title: 'Engineering roots',
-      body: 'Electrical engineering taught me to think in systems: inputs, constraints, feedback. I bring the same habit to software, starting from the problem and working outward to the interface.',
-    },
-    {
-      title: 'Building products',
-      body: 'I work across the stack with TypeScript, React, Next.js and Node.js, from landing pages and visual identity to auth, APIs and databases. Lately that includes a hybrid React Native app at AdGurilla.',
-    },
-    {
-      title: 'Entrepreneurship',
-      body: 'CuraLynx began as a real-time AI assistant that turns doctor–patient conversations into structured notes and prescriptions. It took 2nd prize at HackWithUP, and I am now building it into a startup.',
-    },
-    {
-      title: 'Community',
-      body: 'As Joint Secretary of the Programming & Tech Skills Club (PTSC), I help run the club and built OpenEval, the platform behind Project INIT, our open assessment for first-year students.',
-    },
-  ],
+  lead: 'I study electrical engineering at KNIT Sultanpur, which means I understand circuits and still somehow end up writing software. Hackathon prototypes, production apps and tools my campus actually uses (voluntarily!).',
   /** Real figures from the resume. */
   facts: [
-    { value: '4', label: 'Hackathon podiums', note: 'Incl. 1st at RIFT’26' },
-    { value: '2000+', label: 'Participants at RIFT', note: 'PharmaGuard took 1st' },
-    { value: '3000+', label: 'Visitors served', note: 'Effulgence ’26 fest site' },
-    { value: '140+', label: 'Students assessed', note: 'On OpenEval' },
+    { value: '4', label: 'Hackathon podiums (humble brag)' },
+    { value: '2000+', label: 'Fellow hackers, politely outpaced' },
+    { value: '3000+', label: 'Fest visitors, zero crashes (we don’t talk about the one)' },
+    { value: '140+', label: 'Freshers I put through exams (sorry)' },
   ],
 }
 
@@ -85,50 +79,22 @@ export interface SkillGroup {
 export const skills: SkillGroup[] = [
   {
     label: 'Languages',
-    items: [
-      { name: 'TypeScript' },
-      { name: 'JavaScript' },
-      { name: 'Python' },
-      { name: 'C++' },
-      { name: 'SQL' },
-    ],
+    items: [{ name: 'TypeScript' }, { name: 'JavaScript' }, { name: 'Python' }, { name: 'C++' }, { name: 'SQL' }],
   },
   {
     label: 'Frontend',
-    items: [
-      { name: 'React' },
-      { name: 'Next.js' },
-      { name: 'React Native' },
-      { name: 'Tailwind' },
-      { name: 'GSAP' },
-      { name: 'React Three Fiber' },
-      { name: 'shadcn/ui' },
-    ],
+    items: [{ name: 'React' }, { name: 'Next.js' }, { name: 'React Native' }, { name: 'Tailwind' }, { name: 'GSAP' }],
   },
   {
     label: 'Backend',
-    items: [
-      { name: 'Node.js' },
-      { name: 'Express' },
-      { name: 'FastAPI' },
-      { name: 'REST APIs' },
-      { name: 'WebSockets' },
-      { name: 'JWT / OAuth' },
-      { name: 'Supabase' },
-      { name: 'PostgreSQL' },
-      { name: 'Redis' },
-    ],
-  },
-  {
-    label: 'Cloud & DevOps',
-    items: [{ name: 'AWS' }, { name: 'Docker' }, { name: 'CI/CD' }, { name: 'Vercel' }],
+    items: [{ name: 'Node.js' }, { name: 'Express' }, { name: 'FastAPI' }, { name: 'PostgreSQL' }, { name: 'Supabase' }],
   },
   {
     label: 'Tools',
     items: [
       { name: 'Git' },
-      { name: 'GitHub' },
-      { name: 'Postman' },
+      { name: 'Docker' },
+      { name: 'AWS' },
       { name: 'Figma' },
       // placeholder: suggested in the brief, not listed on the resume.
       { name: 'VS Code', placeholder: true },
@@ -154,11 +120,7 @@ export const experience: ExperienceEntry[] = [
     org: 'AdGurilla',
     kind: 'Internship',
     current: true,
-    stack: ['React Native', 'Expo SDK 57', 'WebView'],
-    points: [
-      'Building AdGurilla’s mobile app in React Native (Expo), combining native screens with WebView-embedded web pages in a hybrid architecture.',
-      'Developed the listing and listing-detail screens, login and brand-side sign-up flows, and integrated existing web app pages via WebView.',
-    ],
+    points: ['Building the React Native (Expo) app: native screens plus WebView pages. Yes, it’s a website in a trench coat. Sometimes.'],
   },
   {
     period: '[Add dates]',
@@ -166,43 +128,29 @@ export const experience: ExperienceEntry[] = [
     org: 'CuraLynx',
     kind: 'Startup',
     placeholder: true,
-    stack: ['React', 'TypeScript', 'Node.js', 'WebSockets', 'Gemini API'],
-    points: [
-      'Real-time AI assistant that converts doctor–patient conversations into structured medical notes and prescriptions. 2nd Prize, HackWithUP.',
-      '[Add: what CuraLynx is working on as a company, such as stage, team and pilots.]',
-    ],
+    points: ['Real-time AI assistant for clinical notes, so doctors can stop typing and start doctoring. 2nd Prize, HackWithUP.'],
   },
   {
     period: '[Add dates]',
     role: 'Joint Secretary',
-    org: 'Programming & Tech Skills Club (PTSC)',
+    org: 'PTSC',
     kind: 'Leadership',
     placeholder: true,
-    points: [
-      'Built OpenEval, the platform for Project INIT, PTSC’s open assessment taken by 140+ first-year students.',
-      '[Add: events organised, sessions led, responsibilities.]',
-    ],
+    points: ['Programming & Tech Skills Club, KNIT Sultanpur. Professional herder of enthusiastic coders.'],
   },
   {
     period: 'Apr 2026',
     role: 'Full Stack Intern',
     org: 'AI Margdarshak',
     kind: 'Internship',
-    stack: ['Next.js', 'TypeScript', 'Tailwind', 'Node.js', 'PostgreSQL', 'Supabase'],
-    points: [
-      'Led full-stack development of the official platform, building the landing page, core UI and visual identity from scratch.',
-      'Implemented authentication and backend APIs with PostgreSQL on Supabase for secure data management.',
-    ],
+    points: ['Built the platform’s landing page, UI, auth and backend APIs. Basically everything except the coffee machine.'],
   },
   {
     period: 'Mar 2026',
     role: 'Full Stack Developer',
     org: 'Effulgence ’26',
     kind: 'Fest',
-    stack: ['Next.js', 'TypeScript', 'Tailwind', 'GSAP'],
-    points: [
-      'Led the frontend team and built the fest website’s event, registration and schedule modules for 3000+ visitors.',
-    ],
+    points: ['Led the frontend team for a fest site serving 3000+ visitors, none of whom noticed the frantic last-night commits.'],
   },
 ]
 
@@ -216,7 +164,7 @@ export interface Project {
   award?: string
   live: string | null
   repo: string | null
-  image?: { base: string; alt: string }
+  image?: { base: string; alt: string; position?: string }
   /** Tone for the generated cover when there is no screenshot. */
   visual?: 'grid' | 'wave'
   placeholder?: boolean
@@ -227,10 +175,9 @@ export const projects: Project[] = [
     slug: 'pharmaguard',
     index: '01',
     title: 'PharmaGuard',
-    tagline: 'AI pharmacogenomics',
-    description:
-      'Analyzes VCF files to give CPIC-aligned medication safety recommendations, with AI-generated explanations a clinician can follow.',
-    stack: ['Next.js', 'Flask', 'Python', 'MongoDB', 'Groq · Llama 3.3'],
+    tagline: 'Your DNA has opinions about your meds',
+    description: 'CPIC-aligned medication safety recommendations from VCF files. Because “side effects may include…” should be a prediction, not a surprise.',
+    stack: ['Next.js', 'Flask', 'MongoDB'],
     award: '1st Prize · RIFT’26',
     live: 'https://pharmaguard-eta.vercel.app',
     repo: 'https://github.com/ishaancreates/Pharmaguard',
@@ -240,10 +187,9 @@ export const projects: Project[] = [
     slug: 'curalynx',
     index: '02',
     title: 'CuraLynx',
-    tagline: 'Clinical notes, in real time',
-    description:
-      'A real-time AI assistant that listens to doctor–patient conversations and turns them into structured medical notes and prescriptions.',
-    stack: ['React', 'TypeScript', 'Node.js', 'Express', 'WebSockets', 'Gemini API'],
+    tagline: 'Doctor talks, notes write themselves',
+    description: 'Turns doctor–patient conversations into structured notes and prescriptions. Finally, handwriting nobody has to decipher.',
+    stack: ['React', 'Node.js', 'Gemini API'],
     award: '2nd Prize · HackWithUP',
     live: 'https://cura-lynx.vercel.app/',
     repo: 'https://github.com/ishaancreates/CuraLynx-deployed',
@@ -253,9 +199,8 @@ export const projects: Project[] = [
     slug: 'openeval',
     index: '03',
     title: 'OpenEval',
-    tagline: 'Assessment platform for PTSC',
-    description:
-      'The evaluation platform for Project INIT: a timed, 120-minute, 45-question exam across AI/ML, CP & Aptitude and Development tracks, taken by 140+ first-year students.',
+    tagline: 'Where freshers meet the timer',
+    description: 'Timed exam platform for Project INIT, taken by 140+ first-year students. Not one of them blamed the Wi-Fi. (Okay, a few did.)',
     // placeholder: stack not listed on the resume.
     stack: ['[Add stack]'],
     live: 'https://openeval.ptsc.app',
@@ -263,17 +208,16 @@ export const projects: Project[] = [
     visual: 'grid',
   },
   {
-    slug: 'next-project',
+    slug: 'ptsc',
     index: '04',
-    title: '[Your next project]',
-    tagline: 'Placeholder',
-    description:
-      'Reserved slot. Add a project here: a title, a two-line description, the stack, and links to the live demo and repository.',
-    stack: ['[Stack]'],
-    live: null,
+    title: 'PTSC',
+    tagline: 'Coders, assemble (website edition)',
+    description: 'Home of the Programming & Tech Skills Club. Yes, we built our own site. No, we didn’t use a template. Mostly.',
+    // placeholder: stack and repo not provided.
+    stack: ['[Add stack]'],
+    live: 'https://ptsc.in',
     repo: null,
-    visual: 'wave',
-    placeholder: true,
+    image: { base: '/images/projects/ptsc', alt: 'PTSC website home page', position: 'center top' },
   },
 ]
 

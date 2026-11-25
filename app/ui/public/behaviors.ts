@@ -109,7 +109,22 @@ function initMagnetic() {
   })
 }
 
+function initCollapse() {
+  document.addEventListener('click', (event) => {
+    let button = (event.target as Element).closest<HTMLElement>('[data-collapse-toggle]')
+    if (!button) return
+    let root = button.closest<HTMLElement>('[data-collapsible]')
+    if (!root) return
+    let collapsed = root.toggleAttribute('data-collapsed')
+    button.setAttribute('aria-expanded', String(!collapsed))
+    // Hide the content from keyboard and assistive tech while collapsed
+    let inner = root.querySelector<HTMLElement>(':scope > .c-body > .c-inner')
+    if (inner) inner.inert = collapsed
+  })
+}
+
 export function initBehaviors() {
+  initCollapse()
   initReveal()
   initParallax()
   initMagnetic()

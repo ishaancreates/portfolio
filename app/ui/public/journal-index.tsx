@@ -8,9 +8,9 @@ export interface JournalPost {
   title: string
   excerpt: string
   category: string
-  dateISO: string
-  dateLabel: string
-  readingMinutes: number
+  dateISO?: string
+  dateLabel?: string
+  readingMinutes?: number
   featured?: boolean
 }
 
@@ -34,7 +34,7 @@ export const JournalIndex = clientEntry(
 
       return (
         <div>
-          <div
+          {categories.length > 1 ? <div
             role="group"
             aria-label="Filter entries by category"
             mix={css({
@@ -95,7 +95,7 @@ export const JournalIndex = clientEntry(
                 </button>
               )
             })}
-          </div>
+          </div> : null}
 
           <div
             mix={css({
@@ -106,8 +106,10 @@ export const JournalIndex = clientEntry(
               '@media (max-width: 960px)': { gridTemplateColumns: '1fr' },
             })}
           >
-            {featured ? <FeaturedPost key={`${generation}-${featured.slug}`} post={featured} /> : null}
-            <ol
+            {featured ? (
+              <FeaturedPost key={`${generation}-${featured.slug}`} post={featured} alone={rest.length === 0} />
+            ) : null}
+            {rest.length === 0 ? null : <ol
               aria-label="Recent entries"
               mix={css({
                 gridColumn: '8 / span 5',
@@ -115,16 +117,10 @@ export const JournalIndex = clientEntry(
                 '@media (max-width: 960px)': { gridColumn: 'auto' },
               })}
             >
-              {rest.length === 0 ? (
-                <li mix={css({ paddingBlock: '28px', color: 'var(--fg-subtle)' })}>
-                  No other entries in this category yet.
-                </li>
-              ) : (
-                rest.map((post, i) => (
-                  <PostRow key={`${generation}-${post.slug}`} post={post} index={i} />
-                ))
-              )}
-            </ol>
+              {rest.map((post, i) => (
+                <PostRow key={`${generation}-${post.slug}`} post={post} index={i} />
+              ))}
+            </ol>}
           </div>
         </div>
       )
@@ -148,24 +144,32 @@ function Meta(handle: Handle<{ post: JournalPost }>) {
         })}
       >
         <span class="cat">{post.category}</span>
-        <span class="dot" aria-hidden="true" />
-        <time datetime={post.dateISO}>{post.dateLabel}</time>
-        <span class="dot" aria-hidden="true" />
-        <span>{post.readingMinutes} min read</span>
+        {post.dateISO ? (
+          <>
+            <span class="dot" aria-hidden="true" />
+            <time datetime={post.dateISO}>{post.dateLabel}</time>
+          </>
+        ) : null}
+        {post.readingMinutes ? (
+          <>
+            <span class="dot" aria-hidden="true" />
+            <span>{post.readingMinutes} min read</span>
+          </>
+        ) : null}
       </p>
     )
   }
 }
 
-function FeaturedPost(handle: Handle<{ post: JournalPost }>) {
+function FeaturedPost(handle: Handle<{ post: JournalPost; alone: boolean }>) {
   return () => {
-    let { post } = handle.props
+    let { post, alone } = handle.props
     return (
       <article
         class="intro-fade"
         data-cursor-label="Read entry"
         mix={css({
-          gridColumn: 'span 7',
+          gridColumn: alone ? '1 / -1' : 'span 7',
           position: 'relative',
           padding: '10px',
           borderRadius: 'var(--radius-xl)',
@@ -176,7 +180,7 @@ function FeaturedPost(handle: Handle<{ post: JournalPost }>) {
           '@media (max-width: 960px)': { gridColumn: 'auto' },
           '& .cover': {
             position: 'relative',
-            aspectRatio: '16 / 9',
+            aspectRatio: alone ? '21 / 9' : '16 / 9',
             overflow: 'hidden',
             borderRadius: 'var(--radius-lg)',
             background:

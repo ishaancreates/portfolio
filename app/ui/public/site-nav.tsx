@@ -2,7 +2,7 @@ import { clientEntry, css, on, ref, type Handle } from 'remix/component'
 
 import { ArrowUpRight, Moon, Sun } from './icons.tsx'
 
-type SectionId = 'about' | 'projects' | 'blog'
+type SectionId = 'about' | 'projects' | 'blog' | 'gallery'
 
 interface SiteNavProps {
   /** On the home page links are in-page anchors; elsewhere they point back to `/`. */
@@ -12,10 +12,11 @@ interface SiteNavProps {
   socials: { label: string; href: string | null }[]
 }
 
-const LINKS: { id: SectionId; label: string; index: string }[] = [
+const LINKS: { id: SectionId; label: string; index: string; page?: string }[] = [
   { id: 'about', label: 'About', index: '01' },
   { id: 'projects', label: 'Projects', index: '02' },
   { id: 'blog', label: 'Blog', index: '03' },
+  { id: 'gallery', label: 'Gallery', index: '04', page: '/gallery' },
 ]
 
 export const SiteNav = clientEntry(import.meta.url, function SiteNav(handle: Handle<SiteNavProps>) {
@@ -119,7 +120,10 @@ export const SiteNav = clientEntry(import.meta.url, function SiteNav(handle: Han
 
   return () => {
     let { onHome, socials } = handle.props
-    let hrefFor = (id: SectionId) => (onHome ? `#${id}` : `/#${id}`)
+    let hrefFor = (id: SectionId) => {
+      let page = LINKS.find((l) => l.id === id)?.page
+      return page ?? (onHome ? `#${id}` : `/#${id}`)
+    }
 
     return (
       <header
@@ -180,20 +184,14 @@ export const SiteNav = clientEntry(import.meta.url, function SiteNav(handle: Han
               fontSize: '15px',
               letterSpacing: '-0.01em',
               '& .mark': {
-                display: 'grid',
-                placeItems: 'center',
+                display: 'block',
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                background: 'var(--accent)',
-                color: 'var(--on-accent)',
-                fontFamily: 'var(--font-serif)',
-                fontStyle: 'italic',
-                fontSize: '24px',
-                lineHeight: 1,
+                objectFit: 'cover',
+                background: 'var(--bg-sunken)',
                 transition: 'rotate 600ms var(--ease-emph)',
               },
-              '& .mark span': { translate: '-1px 1px' },
               '& .last': { color: 'var(--fg-subtle)', transition: 'color 200ms var(--ease-out)' },
               '@media (hover: hover)': {
                 '&:hover .mark': { rotate: '-12deg' },
@@ -202,9 +200,7 @@ export const SiteNav = clientEntry(import.meta.url, function SiteNav(handle: Han
               '@media (max-width: 420px)': { '& .last': { display: 'none' } },
             })}
           >
-            <span class="mark" aria-hidden="true">
-              <span>i</span>
-            </span>
+            <img class="mark" src="/apple-touch-icon.png" alt="" width="40" height="40" />
             <span>
               Ishaan <span class="last">Pandey</span>
             </span>
@@ -421,10 +417,11 @@ function MobileSheet(
               translate: '0 105%',
               transition: 'translate 700ms var(--ease-emph)',
             },
-            '& li a[aria-current] .t': { fontFamily: 'var(--font-serif)', fontStyle: 'italic', letterSpacing: '-0.02em' },
+            '& li a[aria-current] .t': { color: 'var(--accent-ink)' },
             '&[data-open] li a': { translate: '0 0' },
             '&[data-open] li:nth-child(2) a': { transitionDelay: '60ms' },
             '&[data-open] li:nth-child(3) a': { transitionDelay: '120ms' },
+            '&[data-open] li:nth-child(4) a': { transitionDelay: '180ms' },
             '& .socials': {
               display: 'flex',
               flexWrap: 'wrap',

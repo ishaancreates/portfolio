@@ -1,9 +1,10 @@
 import { css, type Handle } from 'remix/component'
 
-import { podiums, projects, type Project } from '../data/site.ts'
+import { projects, type Project } from '../data/site.ts'
 import { sectionSpacing } from './about.tsx'
 import { EmptySlotCover, ExamGridCover } from './public/covers.tsx'
 import { ArrowUpRight, GitHubMark } from './public/icons.tsx'
+import { CollapseBody } from './collapsible.tsx'
 import { SectionHeading } from './section-heading.tsx'
 
 export function Projects() {
@@ -13,24 +14,19 @@ export function Projects() {
     let right = projects.filter((_, i) => i % 2 === 1)
 
     return (
-      <section id="projects" aria-labelledby="projects-title" class="container" mix={sectionSpacing}>
+      <section id="projects" aria-labelledby="projects-title" class="container" data-collapsible mix={sectionSpacing}>
         <SectionHeading
           id="projects-title"
           index="02"
           label="Selected work"
           title={
             <>
-              Things I’ve <span class="serif">shipped</span>, and won with.
+              Things I <span class="serif">built</span>.
             </>
-          }
-          aside={
-            <p>
-              Hackathon winners, production platforms and the tools my campus runs on, picked
-              from the past year of building.
-            </p>
           }
         />
 
+        <CollapseBody>
         <div
           mix={css({
             display: 'grid',
@@ -39,7 +35,7 @@ export function Projects() {
             alignItems: 'start',
             '& .col': { display: 'flex', flexDirection: 'column', gap: 'clamp(72px, 9vw, 140px)' },
             '& .col-l': { gridColumn: '1 / span 7' },
-            '& .col-r': { gridColumn: '8 / span 5', paddingTop: 'clamp(120px, 22vw, 340px)' },
+            '& .col-r': { gridColumn: '8 / span 5', paddingTop: 'clamp(120px, 18vw, 280px)' },
             '@media (max-width: 860px)': {
               gridTemplateColumns: '1fr',
               rowGap: '72px',
@@ -59,8 +55,7 @@ export function Projects() {
             ))}
           </div>
         </div>
-
-        <Podiums />
+        </CollapseBody>
       </section>
     )
   }
@@ -84,6 +79,7 @@ function ProjectCard(handle: Handle<{ project: Project; shape: 'wide' | 'tall' }
             height="900"
             loading="lazy"
             decoding="async"
+            style={project.image.position ? { objectPosition: project.image.position } : undefined}
           />
         ) : project.visual === 'grid' ? (
           <ExamGridCover />
@@ -243,83 +239,16 @@ function ProjectCard(handle: Handle<{ project: Project; shape: 'wide' | 'tall' }
               </span>
               <span class="sr-only">: {project.title} (opens in a new tab)</span>
             </a>
-          ) : (
-            <span class="ph">[Live link]</span>
-          )}
+          ) : null}
           {project.repo ? (
             <a href={project.repo} target="_blank" rel="noreferrer" class="link-draw">
               <GitHubMark />
               Source
               <span class="sr-only">: {project.title} on GitHub (opens in a new tab)</span>
             </a>
-          ) : (
-            <span class="ph">{project.placeholder ? '[Repository]' : '[Repository link]'}</span>
-          )}
+          ) : null}
         </div>
       </article>
     )
   }
-}
-
-function Podiums() {
-  return () => (
-    <div mix={css({ marginTop: 'clamp(110px, 14vw, 200px)' })}>
-      <div
-        data-reveal
-        mix={css({
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          gap: '16px',
-          flexWrap: 'wrap',
-          marginBottom: '28px',
-          '& h3': { fontSize: 'clamp(1.6rem, 2.6vw, 2.4rem)', letterSpacing: '-0.035em', lineHeight: 1.05 },
-          '& h3 .eyebrow': { color: 'var(--accent-ink)', marginRight: '14px', verticalAlign: 'middle' },
-        })}
-      >
-        <h3>
-          <span class="eyebrow">(C)</span>Podium finishes
-        </h3>
-        <p class="eyebrow">Place · Project · Event · Prize</p>
-      </div>
-      <ol
-        mix={css({
-          borderTop: '1px solid var(--line)',
-          '& li': {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-            columnGap: 'var(--col-gap)',
-            alignItems: 'baseline',
-            paddingBlock: '22px',
-            borderBottom: '1px solid var(--line)',
-            transition: 'background-color 300ms var(--ease-out)',
-          },
-          '& .place': {
-            gridColumn: '1 / span 2',
-            fontSize: 'clamp(2rem, 3vw, 2.8rem)',
-            lineHeight: 1,
-            color: 'var(--accent-ink)',
-          },
-          '& .proj': { gridColumn: '3 / span 4', fontSize: '1.2rem', letterSpacing: '-0.02em', fontWeight: 500 },
-          '& .event': { gridColumn: '7 / span 4', color: 'var(--fg-muted)' },
-          '& .prize': { gridColumn: '11 / span 2', textAlign: 'right', fontVariantNumeric: 'tabular-nums' },
-          '@media (max-width: 760px)': {
-            '& .place': { gridColumn: '1 / span 3' },
-            '& .proj': { gridColumn: '4 / -1' },
-            '& .event': { gridColumn: '4 / span 6', fontSize: '14px', marginTop: '4px' },
-            '& .prize': { gridColumn: '10 / -1', fontSize: '14px' },
-          },
-        })}
-      >
-        {podiums.map((p, i) => (
-          <li key={p.project} data-reveal style={{ '--i': String(i) }}>
-            <span class="place serif">{p.place}</span>
-            <span class="proj">{p.project}</span>
-            <span class="event">{p.event}</span>
-            <span class="prize eyebrow">{p.prize}</span>
-          </li>
-        ))}
-      </ol>
-    </div>
-  )
 }

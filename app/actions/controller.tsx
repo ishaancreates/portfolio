@@ -4,6 +4,7 @@ import { assets } from '../assets.ts'
 import { posts } from '../data/posts.ts'
 import { routes } from '../routes.ts'
 import { BlogPostPage, NotFoundPage } from './blog-post-page.tsx'
+import { GalleryPage } from './gallery-page.tsx'
 import { HomePage } from './home-page.tsx'
 
 export default createController(routes, {
@@ -13,6 +14,9 @@ export default createController(routes, {
     },
     home(context) {
       return context.render(<HomePage />)
+    },
+    gallery(context) {
+      return context.render(<GalleryPage />)
     },
     blogPost(context) {
       let index = posts.findIndex((p) => p.slug === context.params.slug)
