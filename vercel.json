@@ -1,7 +1,8 @@
 {
   "functions": {
     "server.ts": {
-      "includeFiles": "{app,public,node_modules/lightningcss-linux-x64-gnu}/**"
+      "includeFiles": "{app,node_modules}/**",
+      "excludeFiles": "node_modules/{typescript,@types,.cache}/**"
     }
   }
 }
